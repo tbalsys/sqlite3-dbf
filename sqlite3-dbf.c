@@ -254,13 +254,13 @@ int main(int argc, char **argv)
     /* Encapsulate the whole process in a transaction */
     printf("BEGIN;\n");
     printf("DROP TABLE IF EXISTS");
-    printf(" %s;\n", tablename);
+    printf(" \"%s\";\n", tablename);
 
     /* Generate the create table statement, do some sanity testing, and scan
      * for a few additional output parameters.  This is an ugly loop that
      * does lots of stuff, but extracting it into two or more loops with the
      * same structure and the same switch-case block seemed even worse. */
-    printf("CREATE TABLE %s (", tablename);
+    printf("CREATE TABLE \"%s\" (", tablename);
     printed = 0;
     for(fieldnum = 0; fieldnum < fieldcount; fieldnum++) {
 	if(fields[fieldnum].type == '0') {
@@ -371,7 +371,7 @@ int main(int argc, char **argv)
 	    if(bufoffset[0] == '*') {
 		continue;
 	    }
-	    printf("INSERT INTO %s VALUES(", tablename);
+	    printf("INSERT INTO \"%s\" VALUES(", tablename);
 	    bufoffset++;
 	    for(fieldnum = 0; fieldnum < fieldcount; fieldnum++) {
 		if(fields[fieldnum].type == '0') {
@@ -526,7 +526,7 @@ int main(int argc, char **argv)
 		}
 	    }
 	}
-	printf(" ON %s(%s);\n", tablename, argv[i]);
+	printf(" ON \"%s\"(%s);\n", tablename, argv[i]);
     }
 
     free(tablename);
